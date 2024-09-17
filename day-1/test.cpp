@@ -7,7 +7,11 @@ void log(const char* message);//这里需要声明，定义可以写在另一个
 double max(double a, double b);
 int max(int a,int b);
 int max(int a);
-void Print(const char* message);
+void Print(const char* message) {
+	for (int i = 0; i < 5; i++) {
+		cout <<message << endl;
+	}
+}
 int dup(int n);
 void swap(int* a, int* b);
 void Swap(int& a, int& b);
