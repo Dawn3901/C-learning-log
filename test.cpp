@@ -1,7 +1,7 @@
 #include<iostream>
 constexpr auto pai = 3.1415926;
 using namespace std;
-
+//配合其他文件使用，函数的定义在其他文件
 void log(const char* message);//这里需要声明，定义可以写在另一个文件里
 //c++可以函数重载，也就是可以出现同名但又有些许不同的函数声明和定义
 double max(double a, double b);
