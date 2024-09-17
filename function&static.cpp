@@ -1,12 +1,12 @@
 #include<iostream>
 using namespace std;
-
+//指针的方式交换
 void swap(int* a, int* b) {
 	int tmp = *a;
 	*a = *b;
 	*b = tmp;
 }
-
+//引用的方式交换
 void Swap(int& a, int& b) {
 	int tmp = a;
 	a = b;
