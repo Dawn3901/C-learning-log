@@ -16,13 +16,19 @@ public://Public下的在其它地方也能使用,struct的话默认public,class�
 	void log_health() {
 		cout << "Now your HP is " <<hp<< endl;
 	}
+	void eat();
 };
-//class的函数两种写法,上一种更好,调用方式不同
+//class的函数两种写法，上一种更好
 void move(Player& player, int time) {
 	player.x += player.speed * time;
 	player.y += player.speed * time;
 }
-
+//class函数的又一种写法，用命名空间写，但是需要提前声明———>line19
+void Player::eat()
+{
+	hp += 50;
+	cout << "You ate a mooncake,hp+50" << endl;
+}
 
 int main()
 {
@@ -33,6 +39,7 @@ int main()
 	dawn.underAttack(30);
 	dawn.log_health();
 	dawn.log_position();
+	dawn.eat();
 	system("pause");
 	return 0;
 }
