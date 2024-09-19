@@ -20,12 +20,15 @@ public:
 	int hour;
 	int minute;
 	int second;
-
+	int week;
+	const string weeks[7] = { "Thursday","Friday","Satarday","Sunday","Monday","Tuesday","Wedesday" };
+	const string Weeks[7] = { "星期四","星期五","星期六","星期日","星期一","星期二","星期三" };
 	Date(time_t time) {
 		second = time % 60;
 		minute = time % 3600 / 60;
 		hour = time % 86400 / 3600 + 8;
 		days = time / 86400 + 1;
+		week = (days-1) % 7;
 		year = 1970;
 		while ((days > 365 && !Isleapyear(year)) || (days > 366 && Isleapyear(year)))
 		{
@@ -41,10 +44,11 @@ public:
 	}
 	
 	void log_date() {
-		cout << year << "年" << month << "月" << date << "日 " << hour << "点" << minute << "分" << second <<"秒" << endl;
+		cout << year << "年" << month << "月" << date << "日 " << hour << "点" << minute << "分" << second << "秒 " << Weeks[week] << endl;
 	}
 	void log_Date() {
-		printf("%d/%d/%d %02d:%02d:%02d\n", year, month, date, hour, minute, date);
+		printf("%d/%d/%d %02d:%02d:%02d ", year, month, date, hour, minute, date);
+		cout << weeks[week] << endl;
 	}
 };
 
