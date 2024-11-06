@@ -1,4 +1,4 @@
-//注意！！只对了3个现在
+//注意！！现在只对了5个
 #include<iostream>
 #include<vector>
 #include<algorithm>
@@ -37,7 +37,7 @@ string getRPN(const string& s) {
 			stack[++top_stack] = s[i]; continue;
 		}
 		if (s[i] == ')') {
-			while (stack[top_stack] != '(' && top_stack > -1) RPN[++top_RPN] = stack[top_stack--];
+			while (top_stack > -1 && stack[top_stack] != '(') RPN[++top_RPN] = stack[top_stack--];
 			top_stack--; continue;
 		}
 	}
@@ -93,6 +93,47 @@ bool calculate(const string& RPN, const vector<bool>& values, const vector<char>
 	}
 	return stack[0];
 }
+
+void Print_min(const vector<bool>& min,int rows) {
+	int i = 0;
+	while (!min[i]) i++;
+	cout << "m" << i;
+	while (i < rows - 1) {
+		if (min[++i]) cout << " ∨" << " m" << i;
+	}
+}
+
+void Print_MAX(const vector<bool>& MAX, int rows) {
+	int j = 0;
+	while (!MAX[j]) j++;
+	cout << "M" << j;
+	while (j < rows - 1) {
+		if (MAX[++j]) cout << " ∧" << " M" << j;
+	}
+	cout << endl;
+}
+
+void OutPut(const vector<bool>& min, const vector<bool>& MAX,int rows) {
+	bool IsTrueForever = true, IsFalseForever = true;
+	for (int i = 0; i < rows; ++i) {
+		if (!min[i]) IsTrueForever = false;
+		if (!MAX[i]) IsFalseForever = false;
+	}
+	if (IsFalseForever) {
+		cout << "0 ; ";
+		Print_MAX(MAX,rows);
+	}
+	else if (IsTrueForever) {
+		Print_min(min, rows);
+		cout << " ; 1" << endl;
+	}
+	else {
+		Print_min(min, rows);
+		cout << " ; ";
+		Print_MAX(MAX, rows);
+	}
+}
+
 //根据所得真值求真值表以及主范式
 void GenerateTruthTable(const string& RPN,const vector<char>& variables){
 	int n = variables.size();//命题变量个数
@@ -108,22 +149,7 @@ void GenerateTruthTable(const string& RPN,const vector<char>& variables){
 		if (result) min[i] = true;
 		else MAX[i] = true;
 	}
-	
-	int i = 0;
-	while (!min[i]) i++;
-	cout << "m" << i;
-	while (i < rows-1) {
-		if (min[++i]) cout << " ∨" << " m" << i;
-	}
-	cout <<" ; ";
-	
-	int j = 0;
-	while (!MAX[j]) j++;
-	cout << "M" << j;
-	while (j < rows-1) {
-		if (MAX[++j]) cout << " ∧" << " M" << j;
-	}
-	cout << endl;
+	OutPut(min, MAX, rows);
 }
 
 int main()
