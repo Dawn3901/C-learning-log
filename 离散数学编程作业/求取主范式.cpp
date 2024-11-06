@@ -88,10 +88,53 @@ bool calculate(const string& RPN, const vector<bool>& values, const vector<char>
 	}
 	return stack[0];
 }
+
+void Print_min(const vector<bool>& min, int rows) {
+	cout << "主析取范式:";
+	int i = 0;
+	while (!min[i]) i++;
+	cout << "m" << i;
+	while (i < rows - 1) {
+		if (min[++i]) cout << " ∨" << " m" << i;
+	}
+}
+
+void Print_MAX(const vector<bool>& MAX, int rows) {
+	cout << "主合取范式:";
+	int j = 0;
+	while (!MAX[j]) j++;
+	cout << "M" << j;
+	while (j < rows - 1) {
+		if (MAX[++j]) cout << " ∧" << " M" << j;
+	}
+	cout << endl;
+}
+
+void OutPut(const vector<bool>& min, const vector<bool>& MAX, int rows) {
+	bool IsTrueForever = true, IsFalseForever = true;
+	for (int i = 0; i < rows; ++i) {
+		if (!min[i]) IsTrueForever = false;
+		if (!MAX[i]) IsFalseForever = false;
+	}
+	if (IsFalseForever) {
+		cout << "矛盾式，主析取范式:0 ; ";
+		Print_MAX(MAX, rows);
+	}
+	else if (IsTrueForever) {
+		Print_min(min, rows);
+		cout << " ; 重言式，主合取范式:1" << endl;
+	}
+	else {
+		Print_min(min, rows);
+		cout << " ; ";
+		Print_MAX(MAX, rows);
+	}
+}
+
 //根据所得真值求真值表以及主范式
-void GenerateTruthTable(const string& RPN,const vector<char>& variables){
+void GenerateTruthTable(const string& RPN, const vector<char>& variables) {
 	int n = variables.size();//命题变量个数
-	int rows = pow(2,n);//真值表行数（也是赋值情况数）
+	int rows = pow(2, n);//真值表行数（也是赋值情况数）
 	vector<bool> min(rows, false);
 	vector<bool> MAX(rows, false);
 	for (int i = 0; i < rows; ++i) {
@@ -102,26 +145,13 @@ void GenerateTruthTable(const string& RPN,const vector<char>& variables){
 		for (auto i : values) {
 			cout << i;
 		}
-		bool result = calculate(RPN, values,variables);
+		bool result = calculate(RPN, values, variables);
 		if (result) min[i] = true;
 		else MAX[i] = true;
-		cout <<":" << result << endl;
+		cout << ":" << result << endl;
 	}
-	cout << "主析取范式:";
-	int i = 0;
-	while (!min[i]) i++;
-	cout << "m" << i;
-	while (i < rows-1) {
-		if (min[++i]) cout << "∨" << "m" << i;
-	}
-	cout << endl;
-	cout << "主合取范式:";
-	int j = 0;
-	while (!MAX[j]) j++;
-	cout << "M" << j;
-	while (j < rows-1) {
-		if (MAX[++j]) cout << "∧" << "M" << j;
-	}
+	
+	OutPut(min, MAX, rows);
 }
 
 int main()
