@@ -88,7 +88,7 @@ bool calculate(const string& RPN, const vector<bool>& values, const vector<char>
 	}
 	return stack[0];
 }
-
+//输出主析取范式
 void Print_min(const vector<bool>& min, int rows) {
 	cout << "主析取范式:";
 	int i = 0;
@@ -98,7 +98,7 @@ void Print_min(const vector<bool>& min, int rows) {
 		if (min[++i]) cout << " ∨" << " m" << i;
 	}
 }
-
+//输出主合取范式
 void Print_MAX(const vector<bool>& MAX, int rows) {
 	cout << "主合取范式:";
 	int j = 0;
@@ -109,7 +109,7 @@ void Print_MAX(const vector<bool>& MAX, int rows) {
 	}
 	cout << endl;
 }
-
+//输出，分三种，永真，矛盾，可满足
 void OutPut(const vector<bool>& min, const vector<bool>& MAX, int rows) {
 	bool IsTrueForever = true, IsFalseForever = true;
 	for (int i = 0; i < rows; ++i) {
