@@ -2,6 +2,14 @@
 #include<vector>
 #include<algorithm>
 #include<string>
+/*输入测试
+A 27
+B 8
+C 15
+D 15
+E 30
+F 5
+*/
 
 using namespace std;
 
